@@ -1,0 +1,15 @@
+== Description ==
+<h3>What is Slicy Slider?</h3>
+
+Slicy Slider is a jQuery slider with a nice sliding effect and a number of options including custom links, custom text fields and more. Slicy Slider is beautiful responsive and supports up to 30 slides of your choice.
+
+Want a slice? <strong>Grab it while it lasts! :)</strong>
+
+<h3>Support</h3>
+
+Please do not leave a review as a support question, they are for reviews. I am not notified of these reviews, and I have no way to respond to you. Please <strong>do not email me for support</strong>, because you will not receive a reply. If you need assistance, click the link in the box below - this link leads you to the forums where you can get support. <strong>Thanks!</strong>
+
+== Changelog ==
+
+= 1.0 =
+* Initial Release
