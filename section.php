@@ -221,7 +221,7 @@ class SlicySlider extends PageLinesSection {
 				true => array( 'name' => __( 'Yes'   , 'pagelines' )),
 				false => array( 'name' => __( 'No'   , 'pagelines' ))
 			),
-			'inputlabel'  =>  __('Autoplay Slicy?', 'pagelines'),
+			'inputlabel'  =>  __('Autoplay Slicy? (Default is "No")', 'pagelines'),
 			'title'      => __( 'Autoplay', 'pagelines' ),
 			'shortexp'      => __( 'Do you want Slicy to autoplay?', 'pagelines' )
 		);
@@ -234,7 +234,7 @@ class SlicySlider extends PageLinesSection {
 				'v' => array( 'name' => __( 'Vertical'   , 'pagelines' )),
 				'h' => array( 'name' => __( 'Horisontal'   , 'pagelines' ))
 			),
-			'inputlabel'  =>  __('Animation style?', 'pagelines'),
+			'inputlabel'  =>  __('Animation style? (Default is "Random")', 'pagelines'),
 			'title'      => __( 'Animation', 'pagelines' ),
 			'shortexp'      => __( 'How should Slicy animate?', 'pagelines' )
 		);
