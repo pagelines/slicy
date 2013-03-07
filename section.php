@@ -3,7 +3,7 @@
 	Section: Slicy Slider
 	Author: Aleksander Hansson
 	Author URI: http://ahansson.com
-	Demo: http://accordy.ahansson.com
+	Demo: http://slicy.ahansson.com
 	Version: 1.0
 	Description: Slicy Slider is a fully responsive slider that supports up to 30 slides with your images.
 	Class Name: SlicySlider
@@ -232,7 +232,7 @@ class SlicySlider extends PageLinesSection {
 			'selectvalues'     => array(
 				'r' => array( 'name' => __( 'Random'   , 'pagelines' )),
 				'v' => array( 'name' => __( 'Vertical'   , 'pagelines' )),
-				'h' => array( 'name' => __( 'Horisontal'   , 'pagelines' ))
+				'h' => array( 'name' => __( 'Horizontal'   , 'pagelines' ))
 			),
 			'inputlabel'  =>  __('Animation style? (Default is "Random")', 'pagelines'),
 			'title'      => __( 'Animation', 'pagelines' ),
