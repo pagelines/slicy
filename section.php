@@ -211,7 +211,7 @@ class SlicySlider extends PageLinesSection {
 			'inputlabel'  => __( 'Number of Images to Configure', 'pagelines' ),
 			'title'   => __( 'Number of images', 'pagelines' ),
 			'shortexp'   => __( 'Enter the number of Slicy slides. <strong>Minimum is 2</strong>', 'pagelines' ),
-			'exp'    => __( "This number will be used to generate slides and option setup.", 'pagelines' ),
+			'exp'    => __( "This number will be used to generate slides and option setup. For best results, please use images with the same dimensions!", 'pagelines' ),
 		);
 
 		$array['slicy_slider_autoplay']  = array(
