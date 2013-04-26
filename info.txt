@@ -11,5 +11,9 @@ Please do not leave a review as a support question, they are for reviews. I am n
 
 == Changelog ==
 
+= 1.1 =
+* LESS bug fixes
+* Fixed translation domain
+
 = 1.0 =
 * Initial Release
