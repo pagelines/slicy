@@ -14,7 +14,7 @@
 
 /* Slicebox Style */
 
-#slicy-section, #slicy {
+#slicy, .section-slicy {
     background: url(@{plExtendRoot}/slicy/img/whitey.png);
     -moz-box-shadow: inset 0 0 10px rgb(0,0,0,0.5) ;
     -webkit-box-shadow: inset 0 0 10px rgb(0,0,0,0.5) ;
@@ -34,7 +34,7 @@
             margin: 0;
             padding: 0;
             display: none;
-            
+
             > a {
                 outline: none;
                 img {
@@ -44,11 +44,11 @@
             &.sb-current {
                 .sb-describtion {
                     -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
-                    filter: alpha(opacity=80);  
+                    filter: alpha(opacity=80);
                     opacity: 1;
                     &:hover {
                         -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=99)";
-                        filter: alpha(opacity=99);  
+                        filter: alpha(opacity=99);
                         background: rgba(190,176,155, 0.7);
                     }
                 }
@@ -72,9 +72,9 @@
         background: rgba(0,0,0, 0.5);
         -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
         filter: alpha(opacity=0);
-        
+
         box-sizing: border-box;
-        
+
         -webkit-box-shadow: 0 -3px 3px -3px rgba(0,0,0,0.35);
         box-shadow: 0 -3px 3px -3px rgba(0,0,0,0.35);
         -moz-box-shadow: 0 -3px 3px -3px rgba(0,0,0,0.35);
