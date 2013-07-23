@@ -9,6 +9,8 @@
 	Class Name: SlicySlider
 	Workswith: templates
 	Cloning: true
+	V3: true
+	Filter: full-width
 */
 
 class SlicySlider extends PageLinesSection {
@@ -27,11 +29,15 @@ class SlicySlider extends PageLinesSection {
 
 	function section_head( ) {
 
-		$clone_id = $this->oset['clone_id'];
+		$clone_id = $this->get_the_id();
 
 		$prefix = ( $clone_id != '' ) ? 'clone_'.$clone_id : '';
 
-		$orientation = ( ploption( 'slicy_slider_orientation', $this->oset ) ) ? ploption( 'slicy_slider_orientation', $this->oset ) : 'r';
+		$orientation = ( $this->opt( 'slicy_slider_orientation', $this->oset ) ) ? $this->opt( 'slicy_slider_orientation', $this->oset ) : 'r';
+
+		$speed = ( $this->opt( 'slicy_slider_speed', $this->oset ) ) ? $this->opt( 'slicy_slider_speed', $this->oset ) : '600';
+
+		$between = ( $this->opt( 'slicy_slider_between', $this->oset ) ) ? $this->opt( 'slicy_slider_between', $this->oset ) : '3000';
 
 		?>
 			<script type="text/javascript">
@@ -57,9 +63,10 @@ class SlicySlider extends PageLinesSection {
 								},
 								orientation : '<?php echo $orientation; ?>',
 								cuboidsRandom : true,
-								<?php if (ploption('slicy_slider_autoplay', $this->oset)==true) {
+								<?php if ($this->opt('slicy_slider_autoplay', $this->oset)==true) {
 									echo 'autoplay : true,';
 								} ?>
+								interval: '<?php echo $between; ?>',
 								disperseFactor : 30
 							} ),
 
@@ -101,7 +108,7 @@ class SlicySlider extends PageLinesSection {
 
 	function section_template() {
 
-		$clone_id = $this->oset['clone_id'];
+		$clone_id = $this->get_the_id();
 
 		$prefix = ( $clone_id != '' ) ? 'clone_'.$clone_id : '';
 
@@ -110,27 +117,27 @@ class SlicySlider extends PageLinesSection {
 				<ul id="slicySlider<?php echo $prefix; ?>" class="sb-slider">
 					<?php
 
-						$slides = ( ploption( 'slicy_slider_slides', $this->oset ) ) ? ploption( 'slicy_slider_slides', $this->oset ) : $this->default_limit;
+						$slides = ( $this->opt( 'slicy_slider_slides', $this->oset ) ) ? $this->opt( 'slicy_slider_slides', $this->oset ) : $this->default_limit;
 
 						$output = '';
 						for ( $i = 1; $i <= $slides; $i++ ) {
 
-							if ( ploption( 'slicy_slider_image_'.$i, $this->oset ) || ploption( 'slicy_slider_content_'.$i, $this->oset ) ) {
+							if ( $this->opt( 'slicy_slider_image_'.$i, $this->oset ) || $this->opt( 'slicy_slider_content_'.$i, $this->oset ) ) {
 
-								$the_text = ploption( 'slicy_slider_text_'.$i, $this->tset );
+								$the_text = $this->opt( 'slicy_slider_text_'.$i, $this->tset );
 
-								$img_alt = ploption( 'slicy_slider_alt_'.$i, $this->tset );
+								$img_alt = $this->opt( 'slicy_slider_alt_'.$i, $this->tset );
 
-								$text = ( $the_text ) ? sprintf( '<div class="sb-description%s sb-description"><h3>%s</h3></div>', $prefix, $the_text ) : '';
+								$text = ( $the_text ) ? sprintf( '<div data-sync="slicy_slider_text_%s" class="sb-description%s sb-description"><h3>%s</h3></div>', $i, $prefix, $the_text ) : '';
 
-								if ( ploption( 'slicy_slider_image_'.$i, $this->oset ) ) {
-									$img = sprintf( '<img src="%s" alt="%s" />%s', ploption( 'slicy_slider_image_'.$i, $this->oset ), $img_alt, $text );
+								if ( $this->opt( 'slicy_slider_image_'.$i, $this->oset ) ) {
+									$img = sprintf( '<img data-sync="slicy_slider_image_%s" src="%s" alt="%s" />%s', $i, $this->opt( 'slicy_slider_image_'.$i, $this->oset ), $img_alt, $text );
 								} else {
 									$img = '';
 								}
 
-								if ( ploption( 'slicy_slider_link_'.$i, $this->tset ) ) {
-									$link = sprintf( '<a href="%s"><img src="%s" alt="%s" /></a>%s', ploption( 'slicy_slider_link_'.$i, $this->tset ), ploption( 'slicy_slider_image_'.$i, $this->tset ), $img_alt, $text );
+								if ( $this->opt( 'slicy_slider_link_'.$i, $this->tset ) ) {
+									$link = sprintf( '<a href="%s"><img data-sync="slicy_slider_image_%s" src="%s" alt="%s" /></a>%s', $this->opt( 'slicy_slider_link_'.$i, $i, $this->tset ), $this->opt( 'slicy_slider_image_'.$i, $this->tset ), $img_alt, $text );
 								} else {
 									$link = '';
 								}
@@ -200,47 +207,60 @@ class SlicySlider extends PageLinesSection {
 
 		$array = array();
 
-		$array['slicy_slider_slides'] = array(
-			'type'    => 'count_select',
-			'count_start' => 2,
-			'count_number'  => 30,
-			'default'  => '2',
-			'inputlabel'  => __( 'Number of Images to Configure', 'SlicySlider' ),
-			'title'   => __( 'Number of images', 'SlicySlider' ),
-			'shortexp'   => __( 'Enter the number of Slicy slides. <strong>Minimum is 2</strong>', 'SlicySlider' ),
-			'exp'    => __( "This number will be used to generate slides and option setup. For best results, please use images with the same dimensions!", 'SlicySlider' ),
+		$array['slicy_slider_settings'] = array(
+			'type'    => 'multi_option',
+			'title'   => __( 'Settings', 'SlicySlider' ),
+			'selectvalues' => array(
+
+				'slicy_slider_slides' => array(
+					'type'    => 'count_select',
+					'count_start' => 2,
+					'count_number'  => 30,
+					'default'  => '2',
+					'inputlabel'  => __( 'Number of Images to Configure', 'SlicySlider' ),
+					'title'   => __( 'Number of images', 'SlicySlider' ),
+					'exp'    => __( "This number will be used to generate slides and option setup. For best results, please use images with the same dimensions!", 'SlicySlider' ),
+				),
+
+				'slicy_slider_autoplay'  => array(
+					'default'       => false,
+					'type'           => 'select',
+					'selectvalues'     => array(
+						true => array( 'name' => __( 'Yes'   , 'SlicySlider' )),
+						false => array( 'name' => __( 'No'   , 'SlicySlider' ))
+					),
+					'inputlabel'  =>  __('Autoplay Slicy? (Default is "No")', 'SlicySlider'),
+				),
+
+				'slicy_slider_speed'  => array(
+					'inputlabel' => __( 'Animation Speed (Default is "600")', 'SlicySlider' ),
+					'type'   => 'text'
+				),
+
+				'slicy_slider_between'  => array(
+					'inputlabel' => __( 'Time Between Rotation (Default is "3000")', 'SlicySlider' ),
+					'type'   => 'text'
+				),
+
+				'slicy_slider_orientation'  => array(
+					'default'       => 'r',
+					'type'           => 'select',
+					'selectvalues'     => array(
+						'r' => array( 'name' => __( 'Random'   , 'SlicySlider' )),
+						'v' => array( 'name' => __( 'Vertical'   , 'SlicySlider' )),
+						'h' => array( 'name' => __( 'Horizontal'   , 'SlicySlider' ))
+					),
+					'inputlabel'  =>  __('Animation style? (Default is "Random")', 'SlicySlider'),
+				),
+			),
 		);
 
-		$array['slicy_slider_autoplay']  = array(
-			'default'       => false,
-			'type'           => 'select',
-			'selectvalues'     => array(
-				true => array( 'name' => __( 'Yes'   , 'SlicySlider' )),
-				false => array( 'name' => __( 'No'   , 'SlicySlider' ))
-			),
-			'inputlabel'  =>  __('Autoplay Slicy? (Default is "No")', 'SlicySlider'),
-			'title'      => __( 'Autoplay', 'SlicySlider' ),
-			'shortexp'      => __( 'Do you want Slicy to autoplay?', 'SlicySlider' )
-		);
-
-		$array['slicy_slider_orientation']  = array(
-			'default'       => 'r',
-			'type'           => 'select',
-			'selectvalues'     => array(
-				'r' => array( 'name' => __( 'Random'   , 'SlicySlider' )),
-				'v' => array( 'name' => __( 'Vertical'   , 'SlicySlider' )),
-				'h' => array( 'name' => __( 'Horizontal'   , 'SlicySlider' ))
-			),
-			'inputlabel'  =>  __('Animation style? (Default is "Random")', 'SlicySlider'),
-			'title'      => __( 'Animation', 'SlicySlider' ),
-			'shortexp'      => __( 'How should Slicy animate?', 'SlicySlider' )
-		);
 
 		global $post_ID;
 
 		$oset = array( 'post_id' => $post_ID, 'clone_id' => $settings['clone_id'], 'type' => $settings['type'] );
 
-		$slides = ( ploption( 'slicy_slider_slides', $oset ) ) ? ploption( 'slicy_slider_slides', $oset ) : $this->default_limit;
+		$slides = ( $this->opt( 'slicy_slider_slides', $oset ) ) ? $this->opt( 'slicy_slider_slides', $oset ) : $this->default_limit;
 
 		for ( $i = 1; $i <= $slides; $i++ ) {
 
