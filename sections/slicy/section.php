@@ -4,7 +4,6 @@
 	Author: Aleksander Hansson
 	Author URI: http://ahansson.com
 	Demo: http://slicy.ahansson.com
-	Version: 1.1
 	Description: Slicy Slider is a fully responsive slider that supports up to 30 slides with your images.
 	Class Name: SlicySlider
 	Workswith: templates
