@@ -9,7 +9,7 @@
 	Workswith: templates
 	Cloning: true
 	V3: true
-	Filter: full-width
+	Filter: full-width, slider
 */
 
 class SlicySlider extends PageLinesSection {
