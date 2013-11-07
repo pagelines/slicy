@@ -5,14 +5,14 @@
 	Author URI: http://ahansson.com
 	Demo: http://slicy.ahansson.com
 	Description: Slicy Slider is a fully responsive slider that supports up to 30 slides with your images.
-	Class Name: SlicySlider
+	Class Name: SlicySliderNormalWidth
 	Workswith: templates
 	Cloning: true
 	V3: true
-	Filter: full-width, slider
+	Filter: slider
 */
 
-class SlicySlider extends PageLinesSection {
+class SlicySliderNormalWidth extends PageLinesSection {
 
 	function section_styles() {
 
